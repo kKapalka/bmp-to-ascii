@@ -80,15 +80,15 @@ void fetch_pixelmap(FILE *fp, unsigned char **map, size_t *data)
 void frender(FILE *fp,unsigned char **map, size_t *data)
 {
 //char asciitab=" .*+|icwIEXQ38&#@";
-char asciitab[17]={' ','.','*','+','|','i','c','w','I','E','X','Q','3','8','&','#','@'};
+char asciitab[70]="$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
   int i,j, display_char;
 for(i=0;i<data[HEIGHT];i++)
   {
   
     for(j=0;j<data[WIDTH];j++)
     {
-	if(fp==stdout) display_char=(map[i][j]*(sizeof(asciitab)))/256;
-	else display_char=(sizeof(asciitab)-1)-(map[i][j]*(sizeof(asciitab)))/256;
+	if(fp==stdout) display_char=(sizeof(asciitab)-1)-(map[i][j]*(sizeof(asciitab)))/256;
+	else display_char=(map[i][j]*(sizeof(asciitab)))/256;
 	fprintf(fp,"%c",asciitab[display_char]);
     }
     fprintf(fp,"\n");
@@ -97,6 +97,6 @@ for(i=0;i<data[HEIGHT];i++)
 
 void free_map(unsigned char **map, size_t *data)
 {
-  for(int i=0;i<data[1];i++) free(map[i]);
+  for(int i=0;i<data[HEIGHT];i++) free(map[i]);
   free(map);
 }

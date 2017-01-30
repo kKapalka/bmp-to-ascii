@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
   frender(stdout,pixelmap,data);
   FILE *out;
   if(out=fopen("test.txt","ab+")) frender(out,pixelmap,data);
-  fclose(out);
 /*-------Uwolnienie zasobow--------------------*/ 
   if(pixelflag==0) free_map(pixelmap,data);
+  fclose(out);
   return 0;
 }
