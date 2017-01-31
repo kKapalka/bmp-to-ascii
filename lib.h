@@ -21,3 +21,4 @@ int init_pixelmap(unsigned char ***map, size_t *data);
 void fetch_pixelmap(FILE *fp, unsigned char **map, size_t *data);
 void frender(FILE *fp, unsigned char **map,size_t *data);
 void free_map(unsigned char **map, size_t *data);
+

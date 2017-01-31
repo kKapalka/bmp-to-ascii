@@ -1,0 +1,54 @@
+Key functions:
+
+void assign_str(char **value, char *text)
+
+	Takes in pointer to char array and a char array representing text to be displayed.
+	Similar in function to Python's input()
+	Prints out text from 2nd argument, takes in text and assigns it to the pointer to the char array
+
+void get_data(size_t *data,FILE *fp)
+
+	Takes in an array capable of storing unsigned long integers, and a pointer to file
+	size_t array is to store exactly 3 informations: file type, represented in a checksum, its width and its height - in that order
+	Checksum is procured from first two bytes of the file. (Byte 1 * 256 + Byte 2)
+	If a checksum is successfully recognized as one of the BMP file, it goes through the whole header - 122 bytes, as I have observed
+	Bytes from 18 to 21 represent the width of a BMP file, bytes from 22 to 25 - its height
+	Function can recognize also *jpg files and textfiles starting with
+	"Enter+#include" or "#include" - those are regarded as C-family programs
+	If filetype is not recognized, checksum is displayed on the screen with accompanying message
+
+int assemble_bytes(FILE *fp, int size)
+	Takes in a pointer to file, and an integer representing desired number of bytes to be bound together
+	It was created specifically to read through the header, as in there, bytes regarding important information are structured as such:
+	Byte 1, Byte 2, Byte 3, Byte 4
+	So reading the whole thing as an integer would not produce a desired result
+
+int init_pixelmap(unsigned char ***map, size_t *data)
+	Takes in pointer to 2d array, and an array filled up in get_data() function
+	First, it checks whether width and height are valid numbers
+	Then dynamically allocates a char array with dimensions [HEIGHT][WIDTH]
+	And then assigns the allocated array to the pointer
+	Error at any point during the allocation results in -1 as the return value, which then is handled properly
+	Successful allocation results in 0 as return value, meaning all went well
+
+void fetch_pixelmap(FILE *fp, unsigned char **map, size_t *data)
+	Takes in pointer to file, a 2d array, and an array storing important information
+	First it calculates a row size, as information stored inside each row is bound into 4-byte dwords
+	Then, difference is calculated between the row size and actual image width
+	After that, the function fills up the array with arithmetic average of three bytes representing individual pixel
+	and after finishing the row, empty bytes calculated through the difference are gathered separately so that they don't ruin the image.
+
+void frender(FILE *fp,unsigned char **map, size_t *data)
+	Takes in pointer to file, a 2d array, and an array with important information
+	It assigns - for each element of the array - a black-and-white representation of the pixel's intensity
+	Using a 70-element char array representing a grey scale.
+	The most white character being ' ' (spacebar) and most black character being '$'
+	Proper display of the pixel is calculated by multiplying the map[i][j] contents by length of the grey-scale array
+	and then dividing by 256. For example, if map[i][j] had stored a value of 30, then at position [i][j] 
+	A character from the grey-scale with an index of (30*70)/256=8.203~~8 would be displayed
+	It can either print out the character to the file, or to 'stdout' stream - in which case the black-and-white scale has to be reversed
+	In which case the said pixel would have to be represented through character with an index of (70-1)-(8.2) = 60.8 ~~ 60
+
+void free_map(unsigned char **map, size_t *data)
+	Takes in a 2d array and information array
+	It just frees the allocated memory.

@@ -34,10 +34,11 @@ int main(int argc, char *argv[])
   fclose(image);
 /*-------Zamkniecie pliku i wywietlenie tablicy na ekran-------------*/
   frender(stdout,pixelmap,data);
+/*-------Zapisanie tablicy pixelmap do pliku--------------*/
   FILE *out;
   if(out=fopen("test.txt","ab+")) frender(out,pixelmap,data);
+  fclose(out);
 /*-------Uwolnienie zasobow--------------------*/ 
   if(pixelflag==0) free_map(pixelmap,data);
-  fclose(out);
   return 0;
 }

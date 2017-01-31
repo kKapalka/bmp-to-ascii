@@ -1,3 +1,7 @@
+Version 1.2
+- key functions from lib.c have been explained in comments (in Polish)
+- file 'documentation.txt' has the same function explanation in English
+
 Version 1.1
 - Extended black-and-white scale, from 17 to 70 different characters
 - uncovered - and squashed - one segmentation fault
