@@ -52,3 +52,9 @@ void frender(FILE *fp,unsigned char **map, size_t *data)
 void free_map(unsigned char **map, size_t *data)
 	Takes in a 2d array and information array
 	It just frees the allocated memory.
+
+int get_offset(FILE *fp)
+	It reads specifically bytes 10-13 of the BMP file - info about the offset between the header and the bitmap are there.
+
+int get_pixel(FILE *fp, int pixel_size)
+	It adds up all values from an individual pixel, and returns their arithmetic average.

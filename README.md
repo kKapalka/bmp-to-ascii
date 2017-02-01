@@ -9,5 +9,5 @@
 - Get your very own ASCII art in terminal AND in a .txt file
 
 # Important notes:
-- program works only with 24-bit BMP files
+- program works only with BMP files
 - ASCII art produces by the program looks reasonable only using MONOSPACE fonts
